@@ -587,7 +587,7 @@ textarea:focus-visible {
   font-size: 11px;
 }
 
-/* Project artwork is CSS-made decoration, not a fictional project screenshot. */
+/* Project previews use the supplied screenshots rather than mock artwork. */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -595,6 +595,8 @@ textarea:focus-visible {
 }
 
 .project-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--white);
@@ -608,77 +610,41 @@ textarea:focus-visible {
 
 .project-art {
   position: relative;
-  display: grid;
   overflow: hidden;
-  min-height: 218px;
-  place-items: center;
-  isolation: isolate;
-}
-
-.project-art--one {
+  aspect-ratio: 2 / 1;
   background: #e7eee8;
 }
 
-.project-art--two {
-  background: #eeeadd;
+.project-preview {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 650ms cubic-bezier(.2, .7, .2, 1);
 }
 
-.art-label,
-.art-index {
+.project-card:hover .project-preview {
+  transform: scale(1.025);
+}
+
+.project-preview-label {
   position: absolute;
-  z-index: 1;
+  top: 14px;
+  left: 15px;
+  padding: 6px 9px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  background: rgb(248 248 244 / 90%);
   color: var(--green);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: .15em;
-}
-
-.art-label {
-  top: 22px;
-  left: 24px;
-}
-
-.art-index {
-  right: 24px;
-  bottom: 18px;
-  color: rgb(6 78 59 / 65%);
-  font-size: 11px;
-}
-
-.art-circle {
-  width: 115px;
-  aspect-ratio: 1;
-  border: 1px solid var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 0 13px rgb(6 78 59 / 4%), 0 0 0 27px rgb(6 78 59 / 4%);
-}
-
-.art-line {
-  position: absolute;
-  z-index: -1;
-  width: 80%;
-  height: 1px;
-  transform: rotate(-35deg);
-  background: var(--gold);
-}
-
-.art-square {
-  width: 98px;
-  height: 98px;
-  transform: rotate(12deg);
-  border: 1px solid var(--green);
-}
-
-.art-orbit {
-  position: absolute;
-  width: 180px;
-  height: 80px;
-  transform: rotate(-28deg);
-  border: 1px solid var(--gold);
-  border-radius: 50%;
+  letter-spacing: .12em;
 }
 
 .project-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 23px 24px 24px;
 }
 
@@ -701,8 +667,7 @@ textarea:focus-visible {
 }
 
 .project-content > p:not(.project-kicker) {
-  min-height: 63px;
-  margin: 9px 0 16px;
+  margin: 9px 0 18px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.8;
@@ -725,7 +690,7 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   gap: 18px;
-  margin-top: 20px;
+  margin-top: auto;
   padding-top: 16px;
   border-top: 1px solid var(--line);
 }
@@ -734,14 +699,22 @@ textarea:focus-visible {
   color: var(--green);
   font-size: 11px;
   font-weight: 600;
+  text-decoration: none;
+  transition: color var(--ease);
+}
+
+.project-button:hover {
+  color: #b28a1f;
 }
 
 .project-button span {
+  display: inline-block;
   margin-left: 3px;
+  transition: transform var(--ease);
 }
 
-.project-button--quiet {
-  color: var(--muted);
+.project-button:hover span {
+  transform: translate(2px, -2px);
 }
 
 /* Education is one clear timeline entry, not an invented degree history. */
@@ -833,7 +806,7 @@ textarea:focus-visible {
   font-size: 12px;
 }
 
-/* Contact details and form remain explicit placeholders until configured. */
+/* Contact details use working email and profile links rather than a dead form. */
 .contact {
   background: var(--green);
   color: var(--white);
@@ -886,86 +859,70 @@ textarea:focus-visible {
   letter-spacing: .12em;
 }
 
-.contact-placeholder {
+.contact-link {
   color: rgb(255 255 255 / 80%);
   font-size: 11px;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--ease);
 }
 
-.contact-form {
-  padding: clamp(23px, 4vw, 37px);
-  background: var(--white);
+.contact-link:hover {
+  color: var(--white);
+}
+
+.contact-card {
+  padding: clamp(25px, 4vw, 38px);
+  background: var(--paper);
   color: var(--ink);
 }
 
-.form-heading {
+.contact-card-label {
+  margin: 0 0 14px;
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+
+.contact-card h3 {
+  max-width: 360px;
   margin: 0;
+  color: var(--green);
   font-family: var(--serif);
-  font-size: 23px;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 500;
+  line-height: 1.2;
 }
 
-.form-note,
-.form-disclaimer {
+.contact-card > p:not(.contact-card-label) {
+  max-width: 350px;
+  margin: 14px 0 22px;
   color: var(--muted);
-  font-size: 10px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.8;
 }
 
-.form-note {
-  margin: 3px 0 22px;
+.contact-button {
+  min-height: 46px;
 }
 
-.form-disclaimer {
-  margin: 10px 0 0;
+/* Elements reveal once as they enter the viewport; the page stays visible without JS. */
+.motion-ready [data-reveal] {
+  transform: translateY(18px);
+  opacity: 0;
+  transition: transform 600ms cubic-bezier(.2, .7, .2, 1), opacity 600ms ease;
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+.motion-ready [data-reveal].is-visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.form-field {
-  display: grid;
-  gap: 6px;
-  margin-bottom: 15px;
+.skills-grid > :nth-child(3n + 2),
+.projects-grid > :nth-child(2) {
+  transition-delay: 80ms;
 }
-
-.form-field label {
-  color: var(--ink);
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.form-field input,
-.form-field textarea {
-  width: 100%;
-  min-height: 43px;
-  padding: 10px 11px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background: #fcfcfa;
-  color: var(--ink);
-  font-size: 11px;
-  resize: vertical;
-}
-
-.form-field textarea {
-  min-height: 93px;
-}
-
-.form-field input::placeholder,
-.form-field textarea::placeholder {
-  color: #929b95;
-}
-
-.form-submit {
-  width: 100%;
-  min-height: 45px;
-}
-
-.form-submit:disabled {
-  cursor: not-allowed;
-  opacity: .65;
 }
 
 /* Footer */
@@ -1257,7 +1214,10 @@ textarea:focus-visible {
     font-size: 36px;
   }
 
-  .skills-grid,
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
   }
@@ -1267,7 +1227,7 @@ textarea:focus-visible {
   }
 
   .project-art {
-    min-height: 190px;
+    min-height: 158px;
   }
 
   .education-card {
@@ -1287,11 +1247,6 @@ textarea:focus-visible {
   .education-meta {
     display: grid;
     gap: 5px;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 0;
   }
 
   .footer-main {

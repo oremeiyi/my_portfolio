@@ -1,6 +1,6 @@
 # Amina Kabir — Personal Portfolio
 
-A responsive personal portfolio built with plain HTML and CSS. It uses Amina's supplied graduation portrait and intentionally marks unprovided details, project examples, and social links as placeholders.
+A responsive personal portfolio built with plain HTML and CSS. It introduces Amina's background and current learning interests, and features the supplied Lusak Academy and portfolio screenshots as project previews.
 
 ## Open the website
 
@@ -13,9 +13,10 @@ There is no build step, framework, or package to install. The Google Fonts link 
 
 ## Files and folders
 
-- **`index.html`** contains all page content and its semantic structure: navigation, hero, biography, skills, sample project cards, education, contact details, form, and footer.
-- **`css/style.css`** contains all colors, type, spacing, layouts, hover states, small entrance animations, and responsive rules.
+- **`index.html`** contains the semantic page structure: navigation, introduction, biography, learning interests, projects, education, contact links, and footer.
+- **`css/style.css`** contains the visual styles, responsive layouts, hover states, and motion.
 - **`images/profile.png`** is a local copy of the graduation photo supplied for this portfolio. The HTML image path is `images/profile.png`.
+- **`images/lusak-academy.png`** and **`images/portfolio-preview.png`** are the supplied project screenshots used in the work section.
 - **`assets/`** is reserved for optional extras you may add later, such as a favicon.
 
 ## Understanding the HTML
@@ -26,9 +27,7 @@ The `<body>` contains what visitors see. `<header>` holds the sticky brand and n
 
 The first link, “Skip to content,” is a keyboard accessibility shortcut. The mobile menu uses the built-in HTML `<details>` and `<summary>` elements, so opening and closing it does not require JavaScript. The portrait's `alt` text describes the image for visitors who cannot see it. Decorative flourishes use `aria-hidden="true"` so screen readers can skip them.
 
-The skills are presented as learning interests, not ratings. Project cards are explicitly labelled placeholders and their “View project” and “GitHub” labels are not fake links. Contact addresses and social profiles are editable text placeholders rather than invented personal details.
-
-The contact form is deliberately disabled: static HTML and CSS alone cannot deliver a message, so the form does not claim to work or pretend to send anything. Once you choose a form service or build a backend, connect it before enabling the fields and send button.
+The skills section describes current learning interests rather than ratings. The projects use the supplied screenshots; only the portfolio card links to a source repository. Contact links use email and profile URLs already present in the site.
 
 ## Understanding the CSS
 
@@ -37,15 +36,14 @@ At the top of `css/style.css`, `:root` defines reusable custom properties (varia
 The stylesheet is organised with section comments that mirror the page:
 
 - **Header:** flexbox aligns the logo, desktop links, and call to action. On narrow screens the desktop navigation is replaced with the native disclosure menu.
-- **Hero:** CSS Grid places the introduction and photo side by side. `clamp()` lets type and spacing scale between minimum and maximum sizes. `object-fit: cover` fills the portrait frame; `object-position: center 23%` shifts the crop upward to keep the graduation cap and face visible.
-- **About, skills, projects, and education:** grid and flex layouts organise the copy and cards. Hover transitions add a small lift without changing the content.
-- **Contact and footer:** clear color contrast, labelled form controls, and responsive layouts make the last sections readable on different screen sizes.
-- **Motion and media queries:** `@keyframes` creates the gentle hero entrance. `prefers-reduced-motion` respects visitors who request less animation. The `@media` rules adjust the layout for tablets (900px), phones (700px), and small phones (480px).
+- **Hero:** CSS Grid places the introduction and photo side by side. `clamp()` lets type and spacing scale between minimum and maximum sizes. `object-fit: cover` fills the portrait frame while keeping the graduation portrait in view.
+- **About, skills, projects, and education:** grid and flex layouts organise the copy and cards. Project previews use the supplied screenshots.
+- **Contact and footer:** the contact area offers direct email and profile links, with responsive layouts for smaller screens.
+- **Motion and media queries:** a small `IntersectionObserver` reveals cards as they enter the viewport. The `prefers-reduced-motion` setting is respected, and the page remains visible if JavaScript or the observer is unavailable. The `@media` rules adjust the layout for tablets (900px), phones (700px), and small phones (480px).
 
 ## Personalise it
 
-1. Replace the sample project titles, descriptions, technology tags, and CSS artwork when you have real projects to share. Add the real project and repository URLs only when they exist.
-2. Replace the contact placeholders with your real email and professional profile links. Use actual profile URLs rather than a generic social home page.
-3. Update the skills list to match what you are currently learning. The status text does not claim a particular skill level.
-4. To change the portrait crop, edit `.portrait`'s `object-position` in `css/style.css`. To use another image, save it in `images/` and change the `src` on the portrait `<img>` in `index.html`.
-5. To receive messages, choose a form service or backend, configure the form's submission endpoint and validation, test a real submission, and only then enable the form controls and button.
+1. Update project descriptions and add demo or repository links when those URLs are available.
+2. Keep the skills list aligned with what you're actually learning; the section is intentionally not a proficiency ranking.
+3. To change the portrait crop, edit `.portrait`'s `object-position` in `css/style.css`. To use another image, save it in `images/` and change the `src` on the portrait `<img>` in `index.html`.
+4. Update the email and profile URLs in `index.html` if your preferred contact details change.
